@@ -46,13 +46,20 @@ public class ControllerEtudiant extends Etudiant {
 		des = scanneIt.next();
 		System.out.println("Entrer le C.I.N d'etudiant :");
 		cin = scanneIt.next();
-		 String sqlString = "INSERT INTO "+table+"(name,des,cin) " + "VALUES(?,?,?)"; // create the Sql query
-		 java.sql.PreparedStatement stmt = configuration.connected().prepareStatement(sqlString, Statement.RETURN_GENERATED_KEYS);
-		 stmt.setString(1, name);
-		 stmt.setString(2, des);
-		 stmt.setString(3, cin);
-		 stmt.executeUpdate();
-		 System.out.println("Etudiant : "+name+" ajouter avec succés");
+		
+		if(name.length() <= 30 && des.length() <= 30 && cin.length() <= 8) {
+			 String sqlString = "INSERT INTO "+table+"(name,des,cin) " + "VALUES(?,?,?)"; // create the Sql query
+			 java.sql.PreparedStatement stmt = configuration.connected().prepareStatement(sqlString, Statement.RETURN_GENERATED_KEYS);
+			 stmt.setString(1, name);
+			 stmt.setString(2, des);
+			 stmt.setString(3, cin);
+			 stmt.executeUpdate();
+			 System.out.println("Etudiant : "+name+" ajouter avec succés");
+		}
+		else {
+			System.out.println("erreur leur d'entrer données");
+		}
+		
 	 }
 	 public void update(String table) throws SQLException {
 			Scanner scanneIt = new Scanner(System.in);
@@ -64,6 +71,8 @@ public class ControllerEtudiant extends Etudiant {
 			des = scanneIt.next();
 			System.out.println("Entrer le C.I.N d'etudiant :");
 			cin = scanneIt.next();
+			
+			 if(name.length() <= 30 && des.length() <= 30 && cin.length() <= 8) {
 			 String sqlString = "UPDATE "+table+" SET name=?, des=?, cin=?" + "WHERE id=?"; // create the Sql query
 			 java.sql.PreparedStatement stmt = configuration.connected().prepareStatement(sqlString);
 			 stmt.setString(1, name);
@@ -72,6 +81,10 @@ public class ControllerEtudiant extends Etudiant {
 			 stmt.setInt(4, id);
 			 stmt.executeUpdate();
 			 System.out.println("Etudiant : "+name+" modifier avec succés");
+			}
+			else {
+				System.out.println("erreur leur d'entrer données");
+			}
 		 }
 	 public void delete(String table) throws SQLException{
 		 Scanner scanneIt = new Scanner(System.in);
